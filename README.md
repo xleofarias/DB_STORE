@@ -10,4 +10,132 @@ Esse projeto foi feito para praticar as seguintes habilidades:
 - JSON
 - POWER BI
 
+## Introduçao
+![bro](https://github.com/xleofarias/DB_STORE/assets/113566725/7786ec4f-4c16-4e56-8118-81f5912656dc)
+
+
+## Python
+
+Utilizei algumas bibliotecas em python:
+  
+  ## 1- PYODBC:
+  ```
+    # Informações do banco
+    DRIVER = config('DRIVER')
+    DB_USER =  config('DB_USER')
+    DB_PASSWORD = config('DB_PASSWORD')
+    DB_NAME = config('DB_NAME')
+
+    # Conexão do banco
+    conexao = pyodbc.connect(f'DRIVER={DRIVER}; DSN={DB_NAME}; UID={DB_USER}; PWD={DB_PASSWORD}')
+
+    # Ativando meu banco para query
+    cursor = conexao.cursor()
+```
+
+## 2- DECOUPLE
+Para deixar as informações do banco ocultas no código utilizei outra biblioteca chamada decouple, caso tenha interesse irei deixar o link da documentação abaixo:
+
+  https://pypi.org/project/python-decouple/
+
+
+## 3- REQUEST
+
+Após isso comecei a fazer as requisições da API para dentro da minha maquina, fiz da seguinte maneira:
+
+```
+# Requisição para coleta os produtos
+requisicao = requests.get("https://fakestoreapi.com/products/").text
+```
+
+## 4- JSON e PANDAS
+
+```
+# Criando string em json
+conversao_string_json = json.loads(requisicao)
+
+# Criar DataFrame a partir do dicionário
+df = pd.DataFrame(conversao_string_json)
+
+# Salvar apenas os dados do DataFrame em um arquivo JSON
+guarda = df.to_json("produtos.json", orient="records" , indent=4)
+
+```
+Dessa forma possibilitando trabalhar com o json em python sem problemas. Fiz algumas manipulações para deixar o arquivo json da forma que queria:
+
+```
+# Para abrir o campo json
+with open("produtos.json") as file:
+    # Carregar seu conteúdo e torná-lo um novo dicionário
+    dados = json.load(file)
+# Excluir o par chave-valor de cada pedido e separando a coluna rating para duas colunas rate e count
+    for dado in dados:
+        dado["rate"] = dado["rating"]["rate"]
+        dado["count"] = dado["rating"]["count"]
+        del dado["rating"]
+        del dado["description"]
+        del dado["image"]
+    
+# Salvando meu arquivo json filtrado para uso no banco
+with open("fil_produtos.json", "w") as file:
+    arquivo_novo = json.dump(dados, file, indent=4)
+```
+
+E para inserir as informações dentro do banco eu utilizei o seguinte código mesclando um pouco de SQL:
+
+## 5- PANDAS e SQL
+
+```
+# Para ler o arquivo em json
+arquivo_novo = pd.read_json("fil_produtos.json")
+
+# Solicitando as informações do banco
+pesquisar = "SELECT * FROM db_store.produtos"
+# Executando a query
+cursor.execute(pesquisar)
+# Realizando a procura pela chave id
+id_existente = set(row[0] for row in cursor.fetchall())
+
+for id, title, price, category, rate, count in zip(
+    arquivo_novo["id"], arquivo_novo["title"], arquivo_novo["price"], arquivo_novo["category"], arquivo_novo["rate"], arquivo_novo["count"]):
+    if id not in id_existente:
+        cursor.execute("INSERT INTO db_store.produtos (ID_PRODUTO, TITULO, PRECO, CATEGORIA, AVALIACAO, QTD_AVALIACAO) VALUES (?, ?, ?, ?, ?, ?)", (id_prod, title, price, category, rate, count))
+        print(f"O Produto {id}: {title} foi inserido com sucesso!")
+    else:
+        print(f"O Produto {id}: {title} já está cadastrado!.")
+
+```
+
+## 6- SQL
+
+Utilizei a ferramenta MySQL WorkBench para realizar a construção do banco e da database:
+
+![image](https://github.com/xleofarias/DB_STORE/assets/113566725/a4fbf577-2d53-400e-868a-4752d30f9b2c)
+
+E para fazer um filtro nos dados criei essa query:
+
+```
+SELECT
+    pedidos.DATA_PEDIDO,
+	pedidos.ID_PEDIDO,
+    usuarios.NOME,
+    usuarios.SOBRENOME,
+    produtos.ID_PRODUTO,
+    produtos.TITULO,
+    pedidos.QUANTIDADE,
+    produtos.PRECO,
+    CAST(pedidos.QUANTIDADE * produtos.PRECO AS DECIMAL(5, 2)) AS COMPRA_VALOR_TOTAL
+FROM 
+	pedidos
+    INNER JOIN
+		produtos ON pedidos.ID_PRODUTO = produtos.ID_PRODUTO
+	INNER JOIN
+		usuarios ON pedidos.USER_ID = usuarios.USER_ID
+ORDER BY
+	DATA_PEDIDO
+
+```
+
+para treinar a manipulação de dados como a Request já que iria utilizar a API FAKESTORE(deixarei o link no fim desse documento para caso alguém se interesse em utilizar também.) 
+
 # EM CONSTRUÇÃO....
