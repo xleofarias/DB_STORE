@@ -1,5 +1,8 @@
 # Projeto análise de vendas
 
+Utilizei a API FAKESTORE nesse projeto:
+https://fakestoreapi.com/
+
 Esse projeto foi feito para praticar as seguintes habilidades:
 
 - PYTHON
@@ -10,7 +13,7 @@ Esse projeto foi feito para praticar as seguintes habilidades:
 - JSON
 - POWER BI
 
-## Introduçao
+## Introdução
 ![bro](https://github.com/xleofarias/DB_STORE/assets/113566725/7786ec4f-4c16-4e56-8118-81f5912656dc)
 
 
@@ -106,6 +109,8 @@ for id, title, price, category, rate, count in zip(
 
 ```
 
+Realizei a mesma estrutura para outras parte do código sempre realizando a manipulação do json, pandas, pyobdc para fazer os tratamentos e inserir dentro do banco, todo o código se encontra nos arquivos.
+
 ## 6- SQL
 
 Utilizei a ferramenta MySQL WorkBench para realizar a construção do banco e da database:
@@ -135,7 +140,15 @@ ORDER BY
 	DATA_PEDIDO
 
 ```
+## 7- POWER BI
 
-para treinar a manipulação de dados como a Request já que iria utilizar a API FAKESTORE(deixarei o link no fim desse documento para caso alguém se interesse em utilizar também.) 
+No POWER BI criei uma home para a análise da fake loja:
 
-# EM CONSTRUÇÃO....
+![image](https://github.com/xleofarias/DB_STORE/assets/113566725/cd403554-a946-4f38-94a7-5361e3490575)
+
+O DASHBOARD se encontra assim até o momento:
+
+![image](https://github.com/xleofarias/DB_STORE/assets/113566725/6cbad333-a093-4e22-a81f-4fab3c98ef64)
+
+Esse é um dos projetos de muitos, aceito dicas e obrigado!
+
