@@ -14,7 +14,8 @@ Esse projeto foi feito para praticar as seguintes habilidades:
 - POWER BI
 
 ## Introdução
-![bro](https://github.com/xleofarias/DB_STORE/assets/113566725/7786ec4f-4c16-4e56-8118-81f5912656dc)
+![bro](https://github.com/xleofarias/DB_STORE/assets/113566725/0c11c685-7a98-4038-b609-9ed6a73a8ea0)
+
 
 
 ## Python
@@ -144,11 +145,13 @@ ORDER BY
 
 No POWER BI criei uma home para a análise da fake loja:
 
-![image](https://github.com/xleofarias/DB_STORE/assets/113566725/cd403554-a946-4f38-94a7-5361e3490575)
+![image](https://github.com/xleofarias/DB_STORE/assets/113566725/77126755-7919-40e7-940d-4278d170ebad)
+
 
 O DASHBOARD se encontra assim até o momento:
 
-![image](https://github.com/xleofarias/DB_STORE/assets/113566725/6cbad333-a093-4e22-a81f-4fab3c98ef64)
+![image](https://github.com/xleofarias/DB_STORE/assets/113566725/538e1d32-f227-42d8-b8a9-25d1630bd983)
+
 
 Esse é um dos projetos de muitos, aceito dicas e obrigado!
 
